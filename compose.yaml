@@ -1,0 +1,33 @@
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: local_root_password
+      MYSQL_DATABASE: mynextwatch
+      MYSQL_USER: mnw
+      MYSQL_PASSWORD: local_dev_password
+    ports: ["127.0.0.1:3306:3306"]
+    volumes: ["mysql_data:/var/lib/mysql"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  mysql-test:
+    image: mysql:8.4
+    profiles: ["test"]
+    environment:
+      MYSQL_ROOT_PASSWORD: local_test_root
+      MYSQL_DATABASE: mynextwatch_test
+      MYSQL_USER: mnw_test
+      MYSQL_PASSWORD: local_test_password
+    ports: ["127.0.0.1:3307:3306"]
+    tmpfs: ["/var/lib/mysql"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+volumes:
+  mysql_data:

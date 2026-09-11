@@ -1,0 +1,12 @@
+node_modules
+.next
+.cache
+.local
+src/generated
+package-lock.json
+next-env.d.ts
+public/tmdb-logo.svg
+prisma/migrations
+coverage
+test-results
+playwright-report
