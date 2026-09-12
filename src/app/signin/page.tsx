@@ -12,6 +12,25 @@ export default async function SignInPage({
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
+  if (process.env.DEMO_ONLY === "true") {
+    return (
+      <main className="grid min-h-dvh place-items-center px-5 py-12">
+        <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8">
+          <Brand />
+          <h1 className="mt-8 text-3xl font-semibold">Explore MyNextWatch</h1>
+          <p className="my-6 text-sm leading-7 text-muted-foreground">
+            This shared demo needs no account. Try the watchlist, ratings, and collections with
+            sample data. Your changes reset when you refresh.
+          </p>
+          <Button asChild className="w-full">
+            <Link href="/demo/dashboard">
+              Open the demo <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+      </main>
+    );
+  }
   const configured = authConfigured();
   if (configured && (await auth())?.user?.id) redirect("/dashboard");
   const { error } = await searchParams;

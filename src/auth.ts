@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getDb } from "@/lib/server/db";
 export const authConfigured = () =>
   Boolean(
+    process.env.DEMO_ONLY !== "true" &&
     process.env.DATABASE_URL &&
     process.env.AUTH_SECRET &&
     process.env.AUTH_GITHUB_ID &&

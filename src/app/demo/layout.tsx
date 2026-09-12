@@ -11,7 +11,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   return (
     <AppProvider initial={demoSnapshot()} demo>
       <Suspense>
-        <AppShell>{children}</AppShell>
+        <AppShell sharedDemo={process.env.DEMO_ONLY === "true"}>{children}</AppShell>
       </Suspense>
     </AppProvider>
   );

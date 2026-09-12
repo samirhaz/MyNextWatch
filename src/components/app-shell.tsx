@@ -46,7 +46,13 @@ export function Brand() {
     </span>
   );
 }
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({
+  children,
+  sharedDemo = false,
+}: {
+  children: ReactNode;
+  sharedDemo?: boolean;
+}) {
   const { data, demo, href } = useApp();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -196,7 +202,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               {data.user.country}
             </Link>
-            {demo && (
+            {demo && !sharedDemo && (
               <Button asChild size="sm">
                 <Link href="/signin">
                   Sign in
