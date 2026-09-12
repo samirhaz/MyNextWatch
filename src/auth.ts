@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthError } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getDb } from "@/lib/server/db";
@@ -21,10 +21,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => ({
       return session;
     },
   },
-  // Log only error classes, never adapter arguments, OAuth tokens, or personal data.
+  // Auth.js types survive production minification; class names do not.
+  // Never log messages, adapter arguments, OAuth tokens, or personal data.
   logger: {
     error(error) {
-      console.error("Authentication error:", error.name);
+      console.error("Authentication error:", error instanceof AuthError ? error.type : "UnknownError");
     },
   },
 }));
